@@ -11,19 +11,19 @@ Validations:
 
 */
 
-// CreateSheet something
+// Create something
 func Create(ctx *gin.Context, req *CreateSheetRequestDto) (*Sheet, error) {
-
-	// TODO::
 	/**
 	Validate the app, asset , process via the api calls......
 	*/
+	// get all the sections related to the form ...
 	sections := req.Sections
 	// Start the section validations...
 	for _, section := range sections {
 		fields := section.Fields
 		// start the field validations...
 		for _, field := range fields {
+			// field type will be the main component on which trigger and condition will be decided
 			fieldType := field.Properties.Type
 			if err := ValidateFieldFormDataForFieldType(fieldType, field.Properties.FieldFormData); err != nil {
 				return nil, err

@@ -32,8 +32,8 @@ var (
 	NotInBetween          ConditionType = "NBW"
 	Selected              ConditionType = "SE"
 	NotSelected           ConditionType = "NSE"
-	Before                ConditionType = "NSE"
-	After                 ConditionType = "NSE"
+	Before                ConditionType = "BF"
+	After                 ConditionType = "AF"
 )
 
 type CreateSheetRequestDto struct {
@@ -65,7 +65,7 @@ type TriggerDto struct {
 }
 
 type FieldDto struct {
-	Properties *PropertiesDto `json:"properties" binding:"required,dive"` // it can be a json
+	Properties *PropertiesDto `json:"properties" binding:"required,dive"`
 	Triggers   []*TriggerDto  `json:"triggers" binding:"dive"`
 }
 
