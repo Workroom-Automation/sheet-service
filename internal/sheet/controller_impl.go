@@ -51,3 +51,13 @@ func (c controller) GetSheet(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, sheet)
 }
+
+func (c controller) GetSheetAuthoringPlatformResources(ctx *gin.Context) {
+	customCtx := utils.GetRequestCtx(ctx)
+	resources, err := c.svc.GetSheetAuthoringPlatformResources(customCtx, nil)
+	if err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+		return
+	}
+	ctx.JSON(http.StatusOK, resources)
+}

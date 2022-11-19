@@ -8,4 +8,5 @@ import (
 type Service interface {
 	Create(ctx *gin.Context, tx *gorm.DB, req *CreateSheetRequestDto) (*Sheet, error)
 	Get(ctx *gin.Context, tx *gorm.DB, sheetId int64) (*Sheet, error)
+	GetSheetAuthoringPlatformResources(ctx *gin.Context, tx *gorm.DB) (*SheetAuthoringPlatformResources, error)
 }

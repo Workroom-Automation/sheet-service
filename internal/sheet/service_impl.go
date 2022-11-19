@@ -75,3 +75,15 @@ func (s *service) Get(ctx *gin.Context, tx *gorm.DB, sheetId int64) (*Sheet, err
 	tx = s.DbWithContext(ctx, tx)
 	return s.repo.Get(tx, sheetId)
 }
+
+func (s *service) GetSheetAuthoringPlatformResources(ctx *gin.Context, tx *gorm.DB) (*SheetAuthoringPlatformResources, error) {
+	res := SheetAuthoringPlatformResources{}
+	fieldResources := make(map[FieldType]FieldResource)
+	fieldResources[Text] = FieldResource{TriggerConditions: ValidTextFieldTypeCondition}
+	fieldResources[Number] = FieldResource{TriggerConditions: ValidNumberFieldTypeConditions}
+	fieldResources[Selection] = FieldResource{TriggerConditions: ValidSelectionFieldTypeConditions}
+	fieldResources[MultiSelection] = FieldResource{TriggerConditions: ValidMultiSelectionFieldTypeConditions}
+	fieldResources[DateSelection] = FieldResource{TriggerConditions: ValidDateSelectionFieldTypeConditions}
+	res.FieldResources = fieldResources
+	return &res, nil
+}

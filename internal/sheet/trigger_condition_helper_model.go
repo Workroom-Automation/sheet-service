@@ -59,7 +59,9 @@ type AfterCondition struct {
 	DateTime time.Time `json:"date_time" validate:"required"`
 }
 
-var validNumberFieldTypeConditions = []ConditionType{
+var ValidTextFieldTypeCondition = []ConditionType{}
+
+var ValidNumberFieldTypeConditions = []ConditionType{
 	LessThan,
 	GreaterThan,
 	LessThanAndEqualTo,
@@ -70,17 +72,17 @@ var validNumberFieldTypeConditions = []ConditionType{
 	NotInBetween,
 }
 
-var validSelectionFieldTypeConditions = []ConditionType{
+var ValidSelectionFieldTypeConditions = []ConditionType{
 	Selected,
 	NotSelected,
 }
 
-var validMultiSelectionFieldTypeConditions = []ConditionType{
+var ValidMultiSelectionFieldTypeConditions = []ConditionType{
 	Selected,
 	NotSelected,
 }
 
-var validDateSelectionFieldTypeConditions = []ConditionType{
+var ValidDateSelectionFieldTypeConditions = []ConditionType{
 	Before,
 	After,
 	Between,
@@ -90,25 +92,25 @@ var validDateSelectionFieldTypeConditions = []ConditionType{
 func IsValidConditionForFieldType(fieldType FieldType, conditionType ConditionType) bool {
 	switch fieldType {
 	case Number:
-		for _, validConditionType := range validNumberFieldTypeConditions {
+		for _, validConditionType := range ValidNumberFieldTypeConditions {
 			if validConditionType == conditionType {
 				return true
 			}
 		}
 	case Selection:
-		for _, validConditionType := range validSelectionFieldTypeConditions {
+		for _, validConditionType := range ValidSelectionFieldTypeConditions {
 			if validConditionType == conditionType {
 				return true
 			}
 		}
 	case MultiSelection:
-		for _, validConditionType := range validMultiSelectionFieldTypeConditions {
+		for _, validConditionType := range ValidMultiSelectionFieldTypeConditions {
 			if validConditionType == conditionType {
 				return true
 			}
 		}
 	case DateSelection:
-		for _, validConditionType := range validDateSelectionFieldTypeConditions {
+		for _, validConditionType := range ValidDateSelectionFieldTypeConditions {
 			if validConditionType == conditionType {
 				return true
 			}

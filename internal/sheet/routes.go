@@ -8,7 +8,8 @@ import (
 func MapRoutesV1(party *gin.RouterGroup, handlers Controller, m *middleware.Middleware) {
 	party.Use(m.EnrichContextFromAuthHeader)
 
-	appParty := party.Group("/sheet")
-	appParty.GET("/", handlers.GetSheet)
-	appParty.POST("/", handlers.CreateSheet)
+	sheetParty := party.Group("/sheet")
+	sheetParty.GET("/", handlers.GetSheet)
+	sheetParty.POST("/", handlers.CreateSheet)
+	sheetParty.GET("/canvas", handlers.GetSheetAuthoringPlatformResources)
 }

@@ -138,3 +138,11 @@ func (c *CreateSheetRequestDto) ToSheet() *Sheet {
 		SheetSections: sheetSections,
 	}
 }
+
+type FieldResource struct {
+	TriggerConditions []ConditionType `json:"trigger_conditions"`
+}
+
+type SheetAuthoringPlatformResources struct {
+	FieldResources map[FieldType]FieldResource `json:"field_resources"`
+}
