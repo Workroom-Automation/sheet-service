@@ -1,63 +1,64 @@
 package sheet
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/leapsquare/sheet-service/pkg/utils"
 	"github.com/pkg/errors"
 	"time"
 )
 
 type LessThanCondition struct {
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
 }
 
 type GreaterThanCondition struct {
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
 }
 
 type LessThanAndEqualToCondition struct {
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
 }
 
 type GreaterThanAndEqualToCondition struct {
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
 }
 
 type EqualToCondition struct {
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
 }
 
 type NotEqualToCondition struct {
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
 }
 
 type BetweenCondition struct {
-	UpperLimit float64 `json:"upper_limit"`
-	LowerLimit float64 `json:"lower_limit"`
+	UpperLimit float64 `json:"upper_limit" validate:"required"`
+	LowerLimit float64 `json:"lower_limit" validate:"required"`
 }
 
 type NotInBetweenCondition struct {
-	UpperLimit float64 `json:"upper_limit"`
-	LowerLimit float64 `json:"lower_limit"`
+	UpperLimit float64 `json:"upper_limit" validate:"required"`
+	LowerLimit float64 `json:"lower_limit" validate:"required"`
 }
 
 type SelectedCondition struct {
-	// would store the options in terms of the alphabet or numbers...
-	Options []string `json:"options"`
+	// TODO decide would store the options in terms of the alphabet or numbers...
+	Options []string `json:"options" validate:"required,min=1"`
 }
 
 type NotSelectedCondition struct {
-	Options []string `json:"options"`
+	Options []string `json:"options" validate:"required,min=1"`
 }
 
 type BeforeCondition struct {
-	DateTime time.Time `json:"date_time"`
+	DateTime time.Time `json:"date_time" validate:"required"`
 }
 
 type AfterCondition struct {
-	DateTime time.Time `json:"date_time"`
+	DateTime time.Time `json:"date_time" validate:"required"`
 }
 
-// TODO make this whole config driven ....
 var validNumberFieldTypeConditions = []ConditionType{
 	LessThan,
 	GreaterThan,
@@ -121,53 +122,127 @@ func ValidateTriggerConditionForFieldType(fieldType FieldType, conditionType Con
 	if !isValidConditionTypeForFieldType {
 		return errors.New(fmt.Sprintf("invalid condition type %s, for field type %s", conditionType, fieldType))
 	}
+	jsonString, _ := json.Marshal(conditionPayload)
+	validate := utils.GetJsonValidator()
 	switch conditionType {
 	case LessThan:
-		if _, ok := conditionPayload.(*LessThanCondition); ok {
+		var lessThan LessThanCondition
+		err := json.Unmarshal(jsonString, &lessThan)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(lessThan)
+		if err == nil {
 			return nil
 		}
 	case GreaterThan:
-		if _, ok := conditionPayload.(*GreaterThanCondition); ok {
+		var greaterThan GreaterThanCondition
+		err := json.Unmarshal(jsonString, &greaterThan)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(greaterThan)
+		if err == nil {
 			return nil
 		}
 	case LessThanAndEqualTo:
-		if _, ok := conditionPayload.(*LessThanAndEqualToCondition); ok {
+		var lessThanAndEqualTo LessThanAndEqualToCondition
+		err := json.Unmarshal(jsonString, &lessThanAndEqualTo)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(lessThanAndEqualTo)
+		if err == nil {
 			return nil
 		}
 	case GreaterThanAndEqualTo:
-		if _, ok := conditionPayload.(*GreaterThanAndEqualToCondition); ok {
+		var greaterThanAndEqualTo GreaterThanAndEqualToCondition
+		err := json.Unmarshal(jsonString, &greaterThanAndEqualTo)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(greaterThanAndEqualTo)
+		if err == nil {
 			return nil
 		}
 	case EqualTo:
-		if _, ok := conditionPayload.(*EqualToCondition); ok {
+		var equalTo EqualToCondition
+		err := json.Unmarshal(jsonString, &equalTo)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(equalTo)
+		if err == nil {
 			return nil
 		}
 	case NotEqualTo:
-		if _, ok := conditionPayload.(*NotEqualToCondition); ok {
+		var notEqualTo NotEqualToCondition
+		err := json.Unmarshal(jsonString, &notEqualTo)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(notEqualTo)
+		if err == nil {
 			return nil
 		}
 	case Between:
-		if _, ok := conditionPayload.(*BetweenCondition); ok {
+		var between BetweenCondition
+		err := json.Unmarshal(jsonString, &between)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(between)
+		if err == nil {
 			return nil
 		}
 	case NotInBetween:
-		if _, ok := conditionPayload.(*NotInBetweenCondition); ok {
+		var notInBetween NotInBetweenCondition
+		err := json.Unmarshal(jsonString, &notInBetween)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(notInBetween)
+		if err == nil {
 			return nil
 		}
 	case Selected:
-		if _, ok := conditionPayload.(*SelectedCondition); ok {
+		var selected SelectedCondition
+		err := json.Unmarshal(jsonString, &selected)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(selected)
+		if err == nil {
 			return nil
 		}
 	case NotSelected:
-		if _, ok := conditionPayload.(*NotSelectedCondition); ok {
+		var notSelected NotSelectedCondition
+		err := json.Unmarshal(jsonString, &notSelected)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(notSelected)
+		if err == nil {
 			return nil
 		}
 	case Before:
-		if _, ok := conditionPayload.(*BeforeCondition); ok {
+		var before BeforeCondition
+		err := json.Unmarshal(jsonString, &before)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(before)
+		if err == nil {
 			return nil
 		}
 	case After:
-		if _, ok := conditionPayload.(*AfterCondition); ok {
+		var after AfterCondition
+		err := json.Unmarshal(jsonString, &after)
+		if err != nil {
+			break
+		}
+		err = validate.Struct(after)
+		if err == nil {
 			return nil
 		}
 	}

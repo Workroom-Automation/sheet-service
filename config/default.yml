@@ -16,5 +16,5 @@ auth:
   Auth0KeySetUrl: https://captainfresh.eu.auth0.com/.well-known/jwks.json
 
 postgres:
-  DSN: postgresql://doadmin:AVNS_TxN_lvCp_apDStW1_nc@db-postgresql-blr1-27078-do-user-12512855-0.b.db.ondigitalocean.com:25060/workroom-dev?sslmode=require
+  DSN: postgresql://doadmin:AVNS_TxN_lvCp_apDStW1_nc@db-postgresql-blr1-27078-do-user-12512855-0.b.db.ondigitalocean.com:25060/sheets-dev?sslmode=require
   MigrationPath: /resources/db/migrations/

@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"github.com/go-playground/validator/v10"
 	"github.com/leapsquare/sheet-service/config"
 	"log"
 	"os"
@@ -14,4 +15,8 @@ func LoadAndParseCfgFile() (*config.Config, error) {
 		return nil, err
 	}
 	return config.ParseConfig(cfgFile)
+}
+
+func GetJsonValidator() *validator.Validate {
+	return validator.New()
 }

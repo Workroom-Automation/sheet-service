@@ -2,21 +2,45 @@ package sheet
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/leapsquare/sheet-service/config"
+	"github.com/leapsquare/sheet-service/pkg/logger"
+	"gorm.io/gorm"
 )
 
 /**
 Validations:
 1. a valid mapping between field type and actions and conditions.....
 2. "Data" validation for the field type...
-
 */
 
-// Create something
-func Create(ctx *gin.Context, req *CreateSheetRequestDto) (*Sheet, error) {
+type service struct {
+	repo   Repository
+	logger logger.Logger
+	cfg    *config.Config
+	db     *gorm.DB
+}
+
+func NewService(logger logger.Logger, db *gorm.DB, cfg *config.Config, repo Repository) Service {
+	return &service{
+		logger: logger,
+		db:     db,
+		cfg:    cfg,
+		repo:   repo,
+	}
+}
+
+func (s *service) DbWithContext(ctx *gin.Context, in *gorm.DB) *gorm.DB {
+	if in == nil {
+		return s.db.WithContext(ctx)
+	}
+	return in
+}
+
+func (s *service) Create(ctx *gin.Context, tx *gorm.DB, req *CreateSheetRequestDto) (*Sheet, error) {
 	/**
 	Validate the app, asset , process via the api calls......
 	*/
-	// get all the sections related to the form ...
+	tx = s.DbWithContext(ctx, tx)
 	sections := req.Sections
 	// Start the section validations...
 	for _, section := range sections {
@@ -40,9 +64,14 @@ func Create(ctx *gin.Context, req *CreateSheetRequestDto) (*Sheet, error) {
 			}
 		}
 	}
-	return req.ToSheet(), nil
+	sheet := req.ToSheet()
+	if err := s.repo.Create(tx, sheet); err != nil {
+		return nil, err
+	}
+	return sheet, nil
 }
 
-func Get(ctx *gin.Context, req *GetSheetRequestDto) (*Sheet, error) {
-	return &Sheet{}, nil
+func (s *service) Get(ctx *gin.Context, tx *gorm.DB, req *GetSheetRequestDto) (*Sheet, error) {
+	tx = s.DbWithContext(ctx, tx)
+	return s.repo.Get(tx, req.Id)
 }

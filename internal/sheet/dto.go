@@ -61,7 +61,7 @@ type TriggerDto struct {
 	ConditionType ConditionType `json:"condition_type"`
 	Condition     interface{}   `json:"condition" binding:"required"`
 	ActionType    ActionType    `json:"action_type"`
-	Action        interface{}   `json:"value" binding:"required"`
+	Action        interface{}   `json:"action" binding:"required"`
 }
 
 type FieldDto struct {
