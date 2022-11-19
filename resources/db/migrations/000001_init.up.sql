@@ -12,7 +12,7 @@ CREATE TABLE sheets
     asset_id       VARCHAR(64)  NOT NULL,
     process_id     VARCHAR(64)  NOT NULL,
     is_active      boolean      NOT NULL default True,
-    sections       jsonb        NOT NULL,
+    sheet_sections jsonb        NOT NULL,
     namespace      VARCHAR(64)  NOT NULL,
     created_at     TIMESTAMP    NOT NULL DEFAULT NOW(),
     updated_at     TIMESTAMP,

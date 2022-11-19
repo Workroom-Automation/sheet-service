@@ -38,13 +38,13 @@ func (c controller) CreateSheet(ctx *gin.Context) {
 }
 
 func (c controller) GetSheet(ctx *gin.Context) {
-	request := GetSheetRequestDto{}
-	if err := ctx.ShouldBindJSON(&request); err != nil {
+	val, err := utils.GetQueryInt64(ctx, "id")
+	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 		return
 	}
 	customCtx := utils.GetRequestCtx(ctx)
-	sheet, err := c.svc.Get(customCtx, nil, &request)
+	sheet, err := c.svc.Get(customCtx, nil, val)
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 		return

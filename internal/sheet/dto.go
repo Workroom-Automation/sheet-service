@@ -121,10 +121,12 @@ func (s *SectionDto) ToSection() *Section {
 
 func (c *CreateSheetRequestDto) ToSheet() *Sheet {
 	isActive := true
+	var sheetSections = &SheetSections{}
 	var sections []*Section
 	for _, ele := range c.Sections {
 		sections = append(sections, ele.ToSection())
 	}
+	sheetSections.Sections = sections
 	return &Sheet{
 		Name:          c.Name,
 		Description:   c.Description,
@@ -133,10 +135,6 @@ func (c *CreateSheetRequestDto) ToSheet() *Sheet {
 		AssetId:       c.AssetId,
 		ProcessId:     c.ProcessId,
 		IsActive:      &isActive,
-		Sections:      sections,
+		SheetSections: sheetSections,
 	}
-}
-
-type GetSheetRequestDto struct {
-	Id int64 `json:"id" binding:"required"`
 }

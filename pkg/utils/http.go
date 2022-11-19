@@ -2,6 +2,7 @@ package utils
 
 import (
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 const (
@@ -20,4 +21,9 @@ func GetRequestCtx(in *gin.Context) *gin.Context {
 
 func GetUserId(ctx *gin.Context) string {
 	return ctx.Request.Header.Get(ctxUserId)
+}
+
+func GetQueryInt64(ctx *gin.Context, key string) (int64, error) {
+	val := ctx.Query(key)
+	return strconv.ParseInt(val, 10, 64)
 }

@@ -5,6 +5,10 @@ import (
 	"gorm.io/gorm"
 )
 
+const (
+	SheetTable = "sheets"
+)
+
 type repo struct {
 	logger logger.Logger
 }
@@ -16,12 +20,12 @@ func NewRepository(logger logger.Logger) Repository {
 }
 
 func (r *repo) Create(tx *gorm.DB, sheet *Sheet) error {
-	return tx.Model(&Sheet{}).Create(&sheet).Error
+	return tx.Table(SheetTable).Create(&sheet).Error
 }
 
 func (r *repo) Get(tx *gorm.DB, sheetId int64) (*Sheet, error) {
 	var sheet *Sheet
-	if err := tx.Model(&Sheet{}).First(&sheet, sheetId).Error; err != nil {
+	if err := tx.Table(SheetTable).First(&sheet, sheetId).Error; err != nil {
 		return nil, err
 	}
 	return sheet, nil

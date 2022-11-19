@@ -71,7 +71,7 @@ func (s *service) Create(ctx *gin.Context, tx *gorm.DB, req *CreateSheetRequestD
 	return sheet, nil
 }
 
-func (s *service) Get(ctx *gin.Context, tx *gorm.DB, req *GetSheetRequestDto) (*Sheet, error) {
+func (s *service) Get(ctx *gin.Context, tx *gorm.DB, sheetId int64) (*Sheet, error) {
 	tx = s.DbWithContext(ctx, tx)
-	return s.repo.Get(tx, req.Id)
+	return s.repo.Get(tx, sheetId)
 }
