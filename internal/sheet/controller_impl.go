@@ -61,3 +61,18 @@ func (c controller) GetSheetAuthoringPlatformResources(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, resources)
 }
+
+func (c controller) UpdateSheet(ctx *gin.Context) {
+	request := UpdateSheetRequestDto{}
+	if err := ctx.ShouldBindJSON(&request); err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+		return
+	}
+	customCtx := utils.GetRequestCtx(ctx)
+	sheet, err := c.svc.Update(customCtx, nil, &request)
+	if err != nil {
+		ctx.String(http.StatusBadRequest, err.Error())
+		return
+	}
+	ctx.JSON(http.StatusOK, sheet)
+}

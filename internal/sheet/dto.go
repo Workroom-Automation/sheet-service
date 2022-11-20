@@ -36,6 +36,39 @@ var (
 	After                 ConditionType = "AF"
 )
 
+type UpdateSheetRequestDto struct {
+	Id            int64         `json:"id" binding:"required"`
+	Name          string        `json:"name" binding:"required"`
+	Description   string        `json:"description" bidding:"required"`
+	ExternalCode  string        `json:"external_code" bidding:"required"`
+	ApplicationId string        `json:"application_id" bidding:"required"`
+	AssetId       string        `json:"asset_id" bidding:"required"`
+	ProcessId     string        `json:"process_id" bidding:"required"`
+	IsActive      *bool         `json:"is_active" bidding:"required"`
+	Sections      []*SectionDto `json:"sections" binding:"dive"`
+}
+
+func (c *UpdateSheetRequestDto) ToSheet() *Sheet {
+	isActive := true
+	var sheetSections = &SheetSections{}
+	var sections []*Section
+	for _, ele := range c.Sections {
+		sections = append(sections, ele.ToSection())
+	}
+	sheetSections.Sections = sections
+	return &Sheet{
+		Id:            c.Id,
+		Name:          c.Name,
+		Description:   c.Description,
+		ExternalCode:  c.ExternalCode,
+		ApplicationId: c.ApplicationId,
+		AssetId:       c.AssetId,
+		ProcessId:     c.ProcessId,
+		IsActive:      &isActive,
+		SheetSections: sheetSections,
+	}
+}
+
 type CreateSheetRequestDto struct {
 	Name          string        `json:"name" binding:"required"`
 	Description   string        `json:"description" bidding:"required"`

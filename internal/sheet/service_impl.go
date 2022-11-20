@@ -87,3 +87,35 @@ func (s *service) GetSheetAuthoringPlatformResources(ctx *gin.Context, tx *gorm.
 	res.FieldResources = fieldResources
 	return &res, nil
 }
+
+func (s *service) Update(ctx *gin.Context, tx *gorm.DB, req *UpdateSheetRequestDto) (*Sheet, error) {
+	tx = s.DbWithContext(ctx, tx)
+	sections := req.Sections
+	// Start the section validations...
+	for _, section := range sections {
+		fields := section.Fields
+		// start the field validations...
+		for _, field := range fields {
+			// field type will be the main component on which trigger and condition will be decided
+			fieldType := field.Properties.Type
+			if err := ValidateFieldFormDataForFieldType(fieldType, field.Properties.FieldFormData); err != nil {
+				return nil, err
+			}
+			// validating the triggers....
+			for _, trigger := range field.Triggers {
+				actionType := trigger.ActionType
+				if err := ValidateTriggerActionForActionType(actionType, trigger.Action); err != nil {
+					return nil, err
+				}
+				if err := ValidateTriggerConditionForFieldType(fieldType, trigger.ConditionType, trigger.Condition); err != nil {
+					return nil, err
+				}
+			}
+		}
+	}
+	sheet := req.ToSheet()
+	if err := s.repo.Update(tx, sheet); err != nil {
+		return nil, err
+	}
+	return sheet, nil
+}

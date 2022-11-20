@@ -2,6 +2,7 @@ package sheet
 
 import (
 	"github.com/leapsquare/sheet-service/pkg/logger"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
 
@@ -29,4 +30,15 @@ func (r *repo) Get(tx *gorm.DB, sheetId int64) (*Sheet, error) {
 		return nil, err
 	}
 	return sheet, nil
+}
+
+func (r *repo) Update(tx *gorm.DB, sheet *Sheet) error {
+	result := tx.Table(SheetTable).Where("id = ?", sheet.Id).Updates(&sheet)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return errors.New("update failed")
+	}
+	return nil
 }

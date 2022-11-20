@@ -11,5 +11,6 @@ func MapRoutesV1(party *gin.RouterGroup, handlers Controller, m *middleware.Midd
 	sheetParty := party.Group("/sheet")
 	sheetParty.GET("/", handlers.GetSheet)
 	sheetParty.POST("/", handlers.CreateSheet)
+	sheetParty.PATCH("/", handlers.UpdateSheet)
 	sheetParty.GET("/canvas", handlers.GetSheetAuthoringPlatformResources)
 }
