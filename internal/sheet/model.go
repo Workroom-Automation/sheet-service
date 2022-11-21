@@ -9,12 +9,13 @@ import (
 )
 
 type Properties struct {
-	Type          string      `json:"type"`
-	Title         string      `json:"title"`
-	Description   string      `json:"description"`
-	IsRequired    *bool       `json:"is_required"`
-	HasAttachment *bool       `json:"has_attachment"`
-	Data          interface{} `json:"data"`
+	Type               string      `json:"type"`
+	Title              string      `json:"title"`
+	Description        string      `json:"description"`
+	IsRequired         *bool       `json:"is_required"`
+	RequireObservation *bool       `json:"require_observation"`
+	HasAttachment      *bool       `json:"has_attachment"`
+	Data               interface{} `json:"data"`
 }
 
 type Trigger struct {

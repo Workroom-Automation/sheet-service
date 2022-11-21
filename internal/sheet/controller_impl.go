@@ -76,3 +76,7 @@ func (c controller) UpdateSheet(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, sheet)
 }
+
+func (c controller) LogSheet(ctx *gin.Context) {
+
+}

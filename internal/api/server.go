@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-// Init @title Workroom Backend
+// Init @title Sheet Service Backend Documentation
 // @contact.name Rohan Agarwal
 // @BasePath /api
 func Init(args []string) error {

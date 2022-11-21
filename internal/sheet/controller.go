@@ -11,4 +11,6 @@ type Controller interface {
 	GetSheetAuthoringPlatformResources(ctx *gin.Context)
 	// UpdateSheet to update the pre authored sheet
 	UpdateSheet(ctx *gin.Context)
+	// LogSheet to log a sheet and have all the validations and triggers....
+	LogSheet(ctx *gin.Context)
 }
