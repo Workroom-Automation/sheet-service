@@ -3,6 +3,7 @@ package sheet
 import (
 	"github.com/leapsquare/sheet-service/pkg/logger"
 	"github.com/pkg/errors"
+	rqp "github.com/timsolov/rest-query-parser"
 	"gorm.io/gorm"
 )
 
@@ -41,4 +42,10 @@ func (r *repo) Update(tx *gorm.DB, sheet *Sheet) error {
 		return errors.New("update failed")
 	}
 	return nil
+}
+
+func (r *repo) List(tx *gorm.DB, q *rqp.Query) ([]*TrimmedSheet, error) {
+	var sheets = []*TrimmedSheet{}
+	err := tx.Table(SheetTable).Where(q.Where(), q.Args()...).Find(&sheets).Limit(q.Limit).Offset(q.Offset).Error
+	return sheets, err
 }

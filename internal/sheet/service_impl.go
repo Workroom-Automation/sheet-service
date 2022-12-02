@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/leapsquare/sheet-service/config"
 	"github.com/leapsquare/sheet-service/pkg/logger"
+	rqp "github.com/timsolov/rest-query-parser"
 	"gorm.io/gorm"
 )
 
@@ -118,4 +119,10 @@ func (s *service) Update(ctx *gin.Context, tx *gorm.DB, req *UpdateSheetRequestD
 		return nil, err
 	}
 	return sheet, nil
+}
+
+func (s *service) List(ctx *gin.Context, tx *gorm.DB, q *rqp.Query) ([]*TrimmedSheet, error) {
+	tx = s.DbWithContext(ctx, tx)
+	q.AddFilter("is_active", rqp.EQ, true)
+	return s.repo.List(tx, q)
 }

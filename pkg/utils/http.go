@@ -27,3 +27,8 @@ func GetQueryInt64(ctx *gin.Context, key string) (int64, error) {
 	val := ctx.Query(key)
 	return strconv.ParseInt(val, 10, 64)
 }
+
+func GetPathInt64(ctx *gin.Context, key string) (int64, error) {
+	val := ctx.Param(key)
+	return strconv.ParseInt(val, 10, 64)
+}

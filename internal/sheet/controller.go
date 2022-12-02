@@ -13,4 +13,6 @@ type Controller interface {
 	UpdateSheet(ctx *gin.Context)
 	// LogSheet to log a sheet and have all the validations and triggers....
 	LogSheet(ctx *gin.Context)
+	// GetSheets to get the list of the sheet
+	GetSheets(ctx *gin.Context)
 }

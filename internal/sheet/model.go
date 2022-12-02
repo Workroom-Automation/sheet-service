@@ -71,3 +71,15 @@ func (s *SheetSections) Value() (driver.Value, error) {
 	message, err := json.Marshal(s)
 	return message, err
 }
+
+type TrimmedSheet struct {
+	*model.BaseModel
+	Id            int64  `json:"id" gorm:"column:id"`
+	Name          string `json:"name" gorm:"column:name"`
+	Description   string `json:"description" gorm:"column:description"`
+	ExternalCode  string `json:"external_code" gorm:"column:external_code"` // TODO verify this must be unique
+	ApplicationId string `json:"application_id" gorm:"column:application_id"`
+	AssetId       string `json:"asset_id" gorm:"column:asset_id"`
+	ProcessId     string `json:"process_id" gorm:"column:process_id"`
+	IsActive      *bool  `json:"is_active" gorm:"column:is_active"`
+}
