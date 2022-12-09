@@ -59,6 +59,15 @@ type AfterCondition struct {
 	DateTime time.Time `json:"date_time" validate:"required"`
 }
 
+type EqualToConditionDate struct {
+	DateTime time.Time `json:"date_time" validate:"required"`
+}
+
+type BetweenConditionDate struct {
+	DateTimeUpperLimit time.Time `json:"upper_limit" validate:"required"`
+	DateTimeLowerLimit time.Time `json:"lower_limit" validate:"required"`
+}
+
 var ValidTextFieldTypeCondition = []ConditionType{}
 
 var ValidNumberFieldTypeConditions = []ConditionType{
@@ -168,14 +177,26 @@ func ValidateTriggerConditionForFieldType(fieldType FieldType, conditionType Con
 			return nil
 		}
 	case EqualTo:
-		var equalTo EqualToCondition
-		err := json.Unmarshal(jsonString, &equalTo)
-		if err != nil {
-			break
-		}
-		err = validate.Struct(equalTo)
-		if err == nil {
-			return nil
+		if fieldType == DateSelection {
+			var equalTo EqualToConditionDate
+			err := json.Unmarshal(jsonString, &equalTo)
+			if err != nil {
+				break
+			}
+			err = validate.Struct(equalTo)
+			if err == nil {
+				return nil
+			}
+		} else {
+			var equalTo EqualToCondition
+			err := json.Unmarshal(jsonString, &equalTo)
+			if err != nil {
+				break
+			}
+			err = validate.Struct(equalTo)
+			if err == nil {
+				return nil
+			}
 		}
 	case NotEqualTo:
 		var notEqualTo NotEqualToCondition
@@ -188,14 +209,26 @@ func ValidateTriggerConditionForFieldType(fieldType FieldType, conditionType Con
 			return nil
 		}
 	case Between:
-		var between BetweenCondition
-		err := json.Unmarshal(jsonString, &between)
-		if err != nil {
-			break
-		}
-		err = validate.Struct(between)
-		if err == nil {
-			return nil
+		if fieldType == DateSelection {
+			var between BetweenConditionDate
+			err := json.Unmarshal(jsonString, &between)
+			if err != nil {
+				break
+			}
+			err = validate.Struct(between)
+			if err == nil {
+				return nil
+			}
+		} else {
+			var between BetweenCondition
+			err := json.Unmarshal(jsonString, &between)
+			if err != nil {
+				break
+			}
+			err = validate.Struct(between)
+			if err == nil {
+				return nil
+			}
 		}
 	case NotInBetween:
 		var notInBetween NotInBetweenCondition
