@@ -39,12 +39,12 @@ var (
 type UpdateSheetRequestDto struct {
 	Id            int64         `json:"id" binding:"required"`
 	Name          string        `json:"name" binding:"required"`
-	Description   string        `json:"description" bidding:"required"`
-	ExternalCode  string        `json:"external_code" bidding:"required"`
-	ApplicationId string        `json:"application_id" bidding:"required"`
-	AssetId       string        `json:"asset_id" bidding:"required"`
-	ProcessId     string        `json:"process_id" bidding:"required"`
-	IsActive      *bool         `json:"is_active" bidding:"required"`
+	Description   string        `json:"description" binding:"required"`
+	ExternalCode  string        `json:"external_code" binding:"required"`
+	ApplicationId string        `json:"application_id" binding:"required"`
+	AssetId       string        `json:"asset_id" binding:"required"`
+	ProcessId     string        `json:"process_id" binding:"required"`
+	IsActive      *bool         `json:"is_active" binding:"required"`
 	Sections      []*SectionDto `json:"sections" binding:"dive"`
 }
 
@@ -71,12 +71,12 @@ func (c *UpdateSheetRequestDto) ToSheet() *Sheet {
 
 type CreateSheetRequestDto struct {
 	Name          string        `json:"name" binding:"required"`
-	Description   string        `json:"description" bidding:"required"`
-	ExternalCode  string        `json:"external_code" bidding:"required"`
-	ApplicationId string        `json:"application_id" bidding:"required"`
-	AssetId       string        `json:"asset_id" bidding:"required"`
-	ProcessId     string        `json:"process_id" bidding:"required"`
-	IsActive      *bool         `json:"is_active" bidding:"required"`
+	Description   string        `json:"description" binding:"required"`
+	ExternalCode  string        `json:"external_code" binding:"required"`
+	ApplicationId string        `json:"application_id" binding:"required"`
+	AssetId       string        `json:"asset_id" binding:"required"`
+	ProcessId     string        `json:"process_id" binding:"required"`
+	IsActive      *bool         `json:"is_active" binding:"required"`
 	Sections      []*SectionDto `json:"sections" binding:"dive"`
 }
 

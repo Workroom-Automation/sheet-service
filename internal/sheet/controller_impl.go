@@ -25,13 +25,13 @@ func NewController(cfg *config.Config, logger logger.Logger, svc Service) Contro
 }
 
 func (c controller) CreateSheet(ctx *gin.Context) {
-	request := CreateSheetRequestDto{}
-	if err := ctx.ShouldBindJSON(&request); err != nil {
+	req := CreateSheetRequestDto{}
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 		return
 	}
 	customCtx := utils.GetRequestCtx(ctx)
-	sheet, err := c.svc.Create(customCtx, nil, &request)
+	sheet, err := c.svc.Create(customCtx, nil, &req)
 	if err != nil {
 		ctx.String(http.StatusBadRequest, err.Error())
 		return
