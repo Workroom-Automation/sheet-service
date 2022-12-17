@@ -45,7 +45,7 @@ func (s *Server) Run() error {
 		//if err := s.app.Listen(s.cfg.Server.Port); err != nil {
 		//	s.logger.Errorf("Error listening to Port: %s", err)
 		//}
-		if err := s.router.Run(s.cfg.Server.Port); err != nil {
+		if err := s.router.RunTLS(s.cfg.Server.Port, "localhost.crt", "localhost.key"); err != nil {
 			s.logger.Errorf("Error listening to Port: %s", err)
 		}
 
